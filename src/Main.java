@@ -1,50 +1,39 @@
 import java.util.List;
-
 public class Main {
+    //
     public static void main(String[] args) {
+        Mundo mundo = new Mundo(4); // Crear un mundo de tamaño 4x4
 
-        Mundo mundo = new Mundo(4);
+        // Definir el mundo con nodos (coordenadas del 1 al 4)
+        mundo.agregarNodo(1, 1, "agente"); // Agente en (1,1)
+        mundo.agregarNodo(2, 1, "hedor");  // Stench en (2,1)
+        mundo.agregarNodo(3, 1, "wumpus"); // Wumpus en (3,1)
+        mundo.agregarNodo(4, 1, "hedor");  // Stench en (4,1)
 
-        // deficion del mundo de estados
-        // fila 1
-        mundo.agregarNodo(0, 0, "vacío");
-        mundo.agregarNodo(0, 1, "vacío");
-        mundo.agregarNodo(0, 2, "vacío");
-        mundo.agregarNodo(0, 3, "vacío");
+        mundo.agregarNodo(1, 2, "brisa");  // Breeze en (1,2)
+        mundo.agregarNodo(2, 2, "vacío"); // Vacío en (2,2)
+        mundo.agregarNodo(3, 2, "tesoro"); // Tesoro en (3,2)
+        mundo.agregarNodo(4, 2, "vacío"); // Vacío en (4,2)
 
-        // fila 2
-        mundo.agregarNodo(1, 0, "vacío");
-        mundo.agregarNodo(1, 1, "agente"); // robot
-        mundo.agregarNodo(1, 2, "brisa"); // brisa
-        mundo.agregarNodo(1, 3, "wumpus"); // wumpus
+        mundo.agregarNodo(1, 3, "pozo");  // Pit en (1,3)
+        mundo.agregarNodo(2, 3, "brisa"); // Breeze en (2,3)
+        mundo.agregarNodo(3, 3, "pozo");  // Pit en (3,3)
+        mundo.agregarNodo(4, 3, "brisa"); // Breeze en (4,3)
 
-        // fila 3
-        mundo.agregarNodo(2, 0, "vacío");
-        mundo.agregarNodo(2, 1, "hedor"); // hedor (S)
-        mundo.agregarNodo(2, 2, "brisa"); // brisa (B)
-        mundo.agregarNodo(2, 3, "tesoro"); // tesoro (oro)
+        mundo.agregarNodo(1, 4, "brisa"); // Breeze en (1,4)
+        mundo.agregarNodo(2, 4, "vacío"); // Vacío en (2,4)
+        mundo.agregarNodo(3, 4, "brisa"); // Breeze en (3,4)
+        mundo.agregarNodo(4, 4, "pozo");  // Pit en (4,4)
 
-        // fila 4
-        mundo.agregarNodo(3, 0, "vacío");
-        mundo.agregarNodo(3, 1, "hedor"); // hedor (S)
-        mundo.agregarNodo(3, 2, "pozo"); // pozo (Pit)
-        mundo.agregarNodo(3, 3, "brisa"); // brisa (B)
+        // Configuración de la búsqueda: Nodo inicial y objetivo
+        Nodo inicio = mundo.obtenerNodo(1, 1);  // Nodo de inicio en (1,1)
+        Nodo objetivo = mundo.obtenerNodo(3, 2); // Nodo objetivo en (3,2)
 
-        // configuracion de la  búsqueda
-        Nodo inicio = mundo.obtenerNodo(1, 1); // nodo inicial: agente
-        Nodo objetivo = mundo.obtenerNodo(2, 3); // nodo objetivo: tesoro
+        // Realizar la búsqueda de profundidad
         BusquedaProfundidad busqueda = new BusquedaProfundidad();
+        mundo.resetearVisitados();  // Resetear visitados antes de comenzar la búsqueda
 
-        // resetear nodos visitados antes de cada ejecución
-        mundo.resetearVisitados();
-
-        // ejecutar búsqueda y obtener el camino
+        // Ejecutar la búsqueda
         List<Nodo> camino = busqueda.buscar(mundo, inicio, objetivo);
-
-        // camino encontrado
-        System.out.println("Camino encontrado:");
-        for (Nodo nodo : camino) {
-            System.out.println("Paso: (" + nodo.fila + ", " + nodo.columna + ")");
-        }
     }
 }
